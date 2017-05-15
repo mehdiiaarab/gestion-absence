@@ -16,7 +16,7 @@ if(isset($_POST["connexion"])){
             header("Location: index.php");
             exit();
         }else{
-            $_SESSION["message"] = "Mot de pass / Email Invalid !";
+            $_SESSION["message"] = "Mot de pass / username Invalid !";
         }
 
     }
@@ -29,15 +29,16 @@ if(isset($_POST['signup']))
 {
 
     require "Utilisateur.php";
-    if( !empty($_POST["username"]) && !empty($_POST["password"]))
+    if( !empty($_POST["username"]) && !empty($_POST["password"]) && !empty($_POST["type"]))
     {
 
         $utilisteur = new Utilisateur(
-            $_POST["username"], $_POST["password"]
+            $_POST["username"], $_POST["password"], $_POST["type"]
         );
 
-        if ($utilisteur->inscription()){
-            $_SESSION["message"] = "vous êtes maintenant inscrit !";
+        if($utilisteur->inscription())
+        {
+            $_SESSION["message"] = "Vous êtes maintenant inscrit ! merci de se connecter utilisant votre username et mot de passe";
             header("Location: login.php");
             exit();
         }

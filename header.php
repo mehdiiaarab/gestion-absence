@@ -10,6 +10,7 @@
 <head>
     <title>Gestion Absence</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css" >
+    <link rel="stylesheet" href="./css/font-awesome.min.css" >
     <link rel="stylesheet"  href="./css/styles.css" >
 </head>
 <body>
@@ -37,8 +38,9 @@
                     <li><a href="etudiant.php"> <i class="fa fa-dashboard"></i> Mes absences</a></li>
                 <?php elseif(isset($_SESSION["type"]) && $_SESSION["type"] == "professeur" ): ?>
                     <li><a href="professeur.php"> <i class="fa fa-dashboard"></i> Professeur</a></li>
-                <?php elseif(isset($_SESSION["id"])): ?>
-                    <li><a href="disconnect.php"> <i class="fa fa-dashboard"></i> <i class="fa fa-logout"></i> Se déconnecter</a></li>
+                <?php endif; ?>
+                <?php if(isset($_SESSION["id"])): ?>
+                    <li><a href="disconnect.php"><i class="fa fa-sign-out"></i> Se déconnecter</a></li>
                 <?php endif ?>
                 <?php if(!isset($_SESSION["login"])): ?>
                     <li><a href="signup.php">Inscription</a></li>

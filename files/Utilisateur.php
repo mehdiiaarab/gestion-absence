@@ -4,7 +4,7 @@
 class Utilisateur extends Db
 {
 
-    private $login, $password, $type;
+    private $login, $password, $type, $active;
 
     /**
      * Utilisateur constructor.
@@ -17,6 +17,7 @@ class Utilisateur extends Db
         $this->login = $login;
         $this->password = $password;
         $this->type = $type;
+        $this->active = 0;
     }
 
 
@@ -45,6 +46,24 @@ class Utilisateur extends Db
     }
 
     /**
+     * @return int
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param int $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+
+
+    /**
      * @param mixed $password
      */
     public function setPassword($password)
@@ -70,16 +89,17 @@ class Utilisateur extends Db
 
 
 
-
-
-    public function connexion(){
+    public function connexion()
+    {
 
         $sttm = $this->db->prepare("SELECT * FROM utilisateur WHERE login = :login AND password = :password");
         $sttm->bindParam(':login', $this->login);
         $sttm->bindParam(':password', $this->password);
-        if($sttm->execute()){
+        if($sttm->execute())
+        {
             $user = $sttm->fetch(PDO::FETCH_ASSOC);
-            if(!empty($user)){
+            if(!empty($user))
+            {
                 extract($user);
                 $_SESSION["id"] = $id;
                 $_SESSION["login"] = $login;
@@ -92,8 +112,6 @@ class Utilisateur extends Db
 
     }
 
-
-
     public function inscription(){
 
         $sttm = $this->db->prepare("INSERT INTO utilisateur (login, password) VALUE (:login, :password)");
@@ -102,7 +120,6 @@ class Utilisateur extends Db
 
         $sttm->execute();
         return true;
-
 
     }
 
