@@ -1,0 +1,16 @@
+#TODO : 
+
+Professeur Panel : 
+	- Marquer l'absence au cours d'un enseignement. ( module ou bien sous module )
+	- Consulter l'absence d'un etudiant donné
+	- 
+
+
+Etudiant : 
+
+	- Consulter les absences
+
+Administrateur : 
+
+	- Consulter les absences d'un etudiant.
+	- Consulter les absences de tout les étudiants

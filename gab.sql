@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `absence` (
   `id_etudiant` int(11) NOT NULL,
   `crn_horaire` varchar(255) NOT NULL,
   `type_absence` varchar(255) NOT NULL,
+  `is_old` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `id_etudiant` (`id_etudiant`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -29,6 +30,20 @@ CREATE TABLE IF NOT EXISTS `absence` (
 -- Dumping data for table gab.absence: ~0 rows (approximately)
 /*!40000 ALTER TABLE `absence` DISABLE KEYS */;
 /*!40000 ALTER TABLE `absence` ENABLE KEYS */;
+
+-- Dumping structure for table gab.avertissement
+CREATE TABLE IF NOT EXISTS `avertissement` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `professeur` int(11) NOT NULL,
+  `etudiant` int(11) NOT NULL,
+  `raison` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `professeur_etudiant` (`professeur`,`etudiant`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table gab.avertissement: ~0 rows (approximately)
+/*!40000 ALTER TABLE `avertissement` DISABLE KEYS */;
+/*!40000 ALTER TABLE `avertissement` ENABLE KEYS */;
 
 -- Dumping structure for table gab.element_module
 CREATE TABLE IF NOT EXISTS `element_module` (
@@ -104,17 +119,14 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `type` varchar(255) DEFAULT 'etudiant',
   `active` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
--- Dumping data for table gab.utilisateur: ~6 rows (approximately)
+-- Dumping data for table gab.utilisateur: ~5 rows (approximately)
 /*!40000 ALTER TABLE `utilisateur` DISABLE KEYS */;
 INSERT IGNORE INTO `utilisateur` (`id`, `login`, `password`, `type`, `active`) VALUES
 	(1, 'admin', 'password', 'admin', 1),
-	(2, 'su@vador.com', 'password', 'etudiant', 0),
-	(3, 'su@vador.com', 'password', 'etudiant', 0),
-	(4, 'mehdi', '123', 'etudiant', 0),
-	(5, 'firdaous', '123', 'etudiant', 0),
-	(6, 'mehdiaarab', '123', 'etudiant', 0);
+	(7, 'professeur', 'password', 'professeur', 0),
+	(8, 'etudiant', 'password', 'etudiant', 0);
 /*!40000 ALTER TABLE `utilisateur` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
