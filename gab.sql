@@ -57,6 +57,8 @@ CREATE TABLE IF NOT EXISTS `element_module` (
 
 -- Dumping data for table gab.element_module: ~0 rows (approximately)
 /*!40000 ALTER TABLE `element_module` DISABLE KEYS */;
+INSERT IGNORE INTO `element_module` (`id`, `module`, `intitule`, `proportion`) VALUES
+	(1, 1, 'Algèbre', '');
 /*!40000 ALTER TABLE `element_module` ENABLE KEYS */;
 
 -- Dumping structure for table gab.etudiant
@@ -78,6 +80,8 @@ CREATE TABLE IF NOT EXISTS `etudiant` (
 
 -- Dumping data for table gab.etudiant: ~0 rows (approximately)
 /*!40000 ALTER TABLE `etudiant` DISABLE KEYS */;
+INSERT IGNORE INTO `etudiant` (`id`, `id_user`, `cin`, `nom`, `cne`, `prenom`, `date_naissance`, `adresse`, `lieu_naissance`, `telephone`, `email`) VALUES
+	(1, 8, 'LE20225', 'Ahannuk', '1122558899', 'Fidaous', '1996-02-11', 'Martil', 'Martil', '06666666', 'ahannuk@gmail.com');
 /*!40000 ALTER TABLE `etudiant` ENABLE KEYS */;
 
 -- Dumping structure for table gab.module
@@ -92,6 +96,8 @@ CREATE TABLE IF NOT EXISTS `module` (
 
 -- Dumping data for table gab.module: ~0 rows (approximately)
 /*!40000 ALTER TABLE `module` DISABLE KEYS */;
+INSERT IGNORE INTO `module` (`id`, `nom_module`, `nature`, `enseigne_par`) VALUES
+	(3, 'Math', 'Module scientifique et technique', 1);
 /*!40000 ALTER TABLE `module` ENABLE KEYS */;
 
 -- Dumping structure for table gab.professeur
@@ -109,6 +115,8 @@ CREATE TABLE IF NOT EXISTS `professeur` (
 
 -- Dumping data for table gab.professeur: ~0 rows (approximately)
 /*!40000 ALTER TABLE `professeur` DISABLE KEYS */;
+INSERT IGNORE INTO `professeur` (`id`, `id_user`, `som`, `nom`, `prenom`, `email`, `telephone`) VALUES
+	(1, 7, 7777777, 'Lionnel', 'Messi', 'messi@gmail.com', '0666552288');
 /*!40000 ALTER TABLE `professeur` ENABLE KEYS */;
 
 -- Dumping structure for table gab.utilisateur
@@ -121,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
--- Dumping data for table gab.utilisateur: ~5 rows (approximately)
+-- Dumping data for table gab.utilisateur: ~3 rows (approximately)
 /*!40000 ALTER TABLE `utilisateur` DISABLE KEYS */;
 INSERT IGNORE INTO `utilisateur` (`id`, `login`, `password`, `type`, `active`) VALUES
 	(1, 'admin', 'password', 'admin', 1),
