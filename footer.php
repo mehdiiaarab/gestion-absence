@@ -1,5 +1,5 @@
 <footer>
-    <p class="text-center">Gestion d'absence 2017 </p>
+    <p class="text-center">Gestion d'absence - GI1 - 2017 </p>
 </footer>
 <script src="./js/jquery-3.2.1.min.js" ></script>
 <script src="./js/bootstrap.min.js" ></script>

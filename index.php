@@ -2,7 +2,7 @@
 <div class="container">
     <div class="text-center">
         <h1><i class="fa fa-graduation-cap"></i></h1>
-        <h2>Gestion d'absence</h2>
+        <h2>Gestion d'absence - GI1</h2>
         <h3>ENSA TETOUAN - 2017</h3>
     </div>
 
