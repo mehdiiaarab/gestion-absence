@@ -8,17 +8,20 @@
 
     <!-- Professeur -->
     <?php if(isset($_SESSION["type"]) && $_SESSION["type"] == "professeur" ): ?>
+        <a href="etudiants.php" class="btn btn-sm btn-primary">Liste des étudiants</a>
+        <hr>
         <?php include "alerts.php"; ?>
     <?php endif ?>
 
     <!-- Administrateur -->
     <?php if(isset($_SESSION["type"]) && $_SESSION["type"] == "admin" ): ?>
+
         <?php include "alerts.php"; ?>
     <?php endif ?>
 
     <!-- Etudiant -->
     <?php if(isset($_SESSION["type"]) && $_SESSION["type"] == "etudiant" ): ?>
-
+        <a href="absence.php" class="btn btn-lg btn-primary">Mes absences</a>
     <?php endif ?>
 
     <?php if(!isset($_SESSION["id"])) :?>

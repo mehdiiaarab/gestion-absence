@@ -1,5 +1,9 @@
 #TODO : 
 
+Module scientifique et technique
+module de management
+module de langues et de communication
+
 Professeur Panel : 
 	- Marquer l'absence au cours d'un enseignement. ( module ou bien sous module )
 	- Consulter l'absence d'un etudiant donné
@@ -14,3 +18,4 @@ Administrateur :
 
 	- Consulter les absences d'un etudiant.
 	- Consulter les absences de tout les étudiants
+	- Remettre a zéro 

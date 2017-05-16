@@ -33,11 +33,11 @@
             <ul class="nav navbar-nav">
                 <li><a href="index.php">Accueil</a></li>
                 <?php if(isset($_SESSION["login"]) && $_SESSION["type"] == "admin" ): ?>
-                    <li><a href="admin.php"> <i class="fa fa-dashboard"></i> Administration</a></li>
+                    <li><a href="index.php"> <i class="fa fa-dashboard"></i> <?=$_SESSION["nom"] ?></a></li>
                 <?php elseif(isset($_SESSION["type"]) && $_SESSION["type"] == "etudiant" ): ?>
                     <li><a href="etudiant.php"> <i class="fa fa-dashboard"></i> Mes absences</a></li>
                 <?php elseif(isset($_SESSION["type"]) && $_SESSION["type"] == "professeur" ): ?>
-                    <li><a href="professeur.php"> <i class="fa fa-dashboard"></i> Professeur</a></li>
+                    <li><a href="index.php"> <i class="fa fa-dashboard"></i> <?=$_SESSION["nom"] ?></a></li>
                 <?php endif; ?>
                 <?php if(isset($_SESSION["id"])): ?>
                     <li><a href="disconnect.php"><i class="fa fa-sign-out"></i> Se déconnecter</a></li>

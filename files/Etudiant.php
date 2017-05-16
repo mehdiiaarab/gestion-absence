@@ -189,5 +189,19 @@ class Etudiant extends Db {
     }
 
 
+    public function listEtudiants()
+    {
+
+        $sttm = $this->db->prepare("SELECT e.id, e.nom, e.prenom, e.email, e.cne, e.date_naissance, e.telephone, e.email FROM etudiant e LEFT JOIN module m on m.enseigne_par=:id_enseignant");
+        $sttm->bindParam(':id_enseignant', $_SESSION["id"]);
+        if($sttm->execute())
+        {
+            $students = $sttm->fetchAll();
+            return $students;
+        }
+
+        return $students;
+    }
+
 
 }
