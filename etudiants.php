@@ -1,7 +1,6 @@
 <?php
 
     require_once "header.php";
-    require "./files/Etudiant.php";
     $student = new Etudiant();
 
     $students = $student->listEtudiants();

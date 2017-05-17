@@ -4,14 +4,14 @@
 class Utilisateur extends Db
 {
 
-    private $login, $password, $type, $active;
+    private $login, $password, $type, $active, $id;
 
     /**
      * Utilisateur constructor.
      * @param $login
      * @param $password
      */
-    public function __construct($login = null, $password = null, $type = null)
+    public function __construct($login = null, $password = null, $type = "etudiant")
     {
         parent::__construct();
         $this->login = $login;
@@ -127,13 +127,36 @@ class Utilisateur extends Db
 
     }
 
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+
+
     public function inscription(){
 
-        $sttm = $this->db->prepare("INSERT INTO utilisateur (login, password) VALUE (:login, :password)");
+        $sttm = $this->db->prepare("INSERT INTO utilisateur (login, password, type) VALUE (:login, :password, :type)");
         $sttm->bindParam(':login', $this->login);
         $sttm->bindParam(':password', $this->password);
+        $sttm->bindParam(':type', $this->type);
 
         $sttm->execute();
+
+        $this->id = $this->db->lastInsertId();
+
+
         return true;
 
     }

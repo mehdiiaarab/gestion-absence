@@ -125,6 +125,13 @@ class Professeur extends Db {
         $this->telephone = $telephone;
     }
 
+    public function signup(){
+
+        /* Signup process */
+
+        return true;
+    }
+
 
 
 }

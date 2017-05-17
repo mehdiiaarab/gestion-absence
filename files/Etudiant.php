@@ -2,7 +2,7 @@
 
 class Etudiant extends Db {
 
-    private $id, $is_user, $cin, $nom, $cne, $prenom, $date_naissance, $adresse, $lieu_naissance, $telephone, $email;
+    private $id, $id_user, $cin, $nom, $cne, $prenom, $date_naissance, $adresse, $lieu_naissance, $telephone, $email;
 
     /**
      * Etudiant constructor.
@@ -31,17 +31,17 @@ class Etudiant extends Db {
     /**
      * @return mixed
      */
-    public function getIsUser()
+    public function getIdUser()
     {
-        return $this->is_user;
+        return $this->id_user;
     }
 
     /**
-     * @param mixed $is_user
+     * @param mixed $id_user
      */
-    public function setIsUser($is_user)
+    public function setIdUser($id_user)
     {
-        $this->is_user = $is_user;
+        $this->id_user = $id_user;
     }
 
     /**
@@ -192,6 +192,8 @@ class Etudiant extends Db {
     public function listEtudiants()
     {
 
+        $students = [];
+
         $sttm = $this->db->prepare("SELECT e.id, e.nom, e.prenom, e.email, e.cne, e.date_naissance, e.telephone, e.email FROM etudiant e LEFT JOIN module m on m.enseigne_par=:id_enseignant");
         $sttm->bindParam(':id_enseignant', $_SESSION["id"]);
         if($sttm->execute())
@@ -201,6 +203,31 @@ class Etudiant extends Db {
         }
 
         return $students;
+    }
+
+    public function signup()
+    {
+
+        $sttm = $this->db->prepare("INSERT INTO etudiant (id_user, cin, nom, cne, prenom, date_naissance, adresse, lieu_naissance, telephone, email) VALUE (:id_user, :cin, :nom, :cne, :prenom, :date_naissance, :adresse, :lieu_naissance, :telephone, :email)");
+
+        $sttm->bindParam(':id_user', $this->id_user);
+        $sttm->bindParam(':cin', $this->cin);
+        $sttm->bindParam(':nom', $this->nom);
+        $sttm->bindParam(':cne', $this->cne);
+        $sttm->bindParam(':prenom', $this->prenom);
+        $sttm->bindParam(':date_naissance', $this->date_naissance);
+        $sttm->bindParam(':adresse', $this->adresse);
+        $sttm->bindParam(':lieu_naissance', $this->lieu_naissance);
+        $sttm->bindParam(':telephone', $this->telephone);
+        $sttm->bindParam(':email', $this->email);
+
+        if($sttm->execute())
+        {
+            return true;
+        }
+
+        return false;
+
     }
 
 
