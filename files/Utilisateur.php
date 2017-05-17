@@ -127,6 +127,29 @@ class Utilisateur extends Db
 
     }
 
+    public function exists($email){
+        $sttm = $this->db->prepare("SELECT * FROM (
+            SELECT utilisateur.login from utilisateur
+            union all
+            SELECT email FROM professeur
+            union all
+            SELECT email FROM etudiant) utilisateur, professeur, etudiant
+            WHERE login = :login or professeur.email = :email or etudiant.email=:email");
+        $sttm->bindParam(':login', $this->login);
+        $sttm->bindParam(':email', $email);
+        if($sttm->execute())
+        {
+            $user = $sttm->fetch(PDO::FETCH_ASSOC);
+            if(!empty($user))
+            {
+                return true;
+            }else{
+                return false;
+            }
+        }
+}
+
+
     /**
      * @return mixed
      */

@@ -40,56 +40,56 @@ if(isset($_POST['signup']))
             $_POST["username"], $_POST["password"], $_POST["type"]
         );
 
+        if($utilisteur->exists($_POST["email"])){
+            $_SESSION["message"] = "Ce compte existe déjà.";
+        }else{
+            if($utilisteur->inscription())
+            {
 
-        if($utilisteur->inscription())
-        {
+                if($_POST["type"] == "etudiant"){
 
-            if($_POST["type"] == "etudiant"){
+                    $etudiant = new Etudiant();
+                    $etudiant->setNom($_POST["nom"]);
+                    $etudiant->setPrenom($_POST["prenom"]);
+                    $etudiant->setCin($_POST["cin"]);
+                    $etudiant->setCne($_POST["cne"]);
+                    $etudiant->setDateNaissance($_POST["date_naissance"]);
+                    $etudiant->setEmail($_POST["email"]);
+                    $etudiant->setLieuNaissance($_POST["lieu_naissance"]);
+                    $etudiant->setAdresse($_POST["adresse"]);
+                    $etudiant->setTelephone($_POST["telephone"]);
+                    $etudiant->setIdUser($utilisteur->getId());
 
-                $etudiant = new Etudiant();
-                $etudiant->setNom($_POST["nom"]);
-                $etudiant->setPrenom($_POST["prenom"]);
-                $etudiant->setCin($_POST["cin"]);
-                $etudiant->setCne($_POST["cne"]);
-                $etudiant->setDateNaissance($_POST["date_naissance"]);
-                $etudiant->setEmail($_POST["email"]);
-                $etudiant->setLieuNaissance($_POST["lieu_naissance"]);
-                $etudiant->setAdresse($_POST["adresse"]);
-                $etudiant->setTelephone($_POST["telephone"]);
-                $etudiant->setIdUser($utilisteur->getId());
+                    if($etudiant->signup()){
+                        $_SESSION["message"] = "Vous êtes maintenant inscrit ! merci de se connecter utilisant votre username et mot de passe";
+                        header("Location: login.php");
+                        exit();
+                    }
 
+                }elseif($_POST["type"] == "professeur" ){
 
+                    /* same thing for professeur */
+                    $professeur = new Professeur();
+                    $professeur->setNom($_POST["nom"]);
+                    $professeur->setPrenom($_POST["prenom"]);
+                    $professeur->setSom($_POST["som"]);
+                    $professeur->setEmail($_POST["email"]);
+                    $professeur->setTelephone($_POST["telephone"]);
+                    $professeur->setIdUser($utilisteur->getId());
 
-                if($etudiant->signup()){
-                    $_SESSION["message"] = "Vous êtes maintenant inscrit ! merci de se connecter utilisant votre username et mot de passe";
-                    header("Location: login.php");
-                    exit();
-                }
-
-
-            }elseif($_POST["type"] == "professeur" ){
-
-                /* same thing for professeur */
-                $professeur = new Professeur();
-
-
-                if($professeur->signup()){
-                    $_SESSION["message"] = "Vous êtes maintenant inscrit ! merci de se connecter utilisant votre username et mot de passe";
-                    header("Location: login.php");
-                    exit();
-                }
-
-
+                    if($professeur->signup()){
+                        $_SESSION["message"] = "Vous êtes maintenant inscrit ! merci de se connecter utilisant votre username et mot de passe";
+                        header("Location: login.php");
+                        exit();
+                    }
             }
 
+            }else{
 
+                $_SESSION["message"] = "Erreur lors de votre action, veuillez réessayer.";
 
-        }else{
-
-            $_SESSION["message"] = "Erreur lors de votre action, veuillez réessayer.";
-
+            }
         }
-
     }else{
         $_SESSION["message"] = "Vous avez laisser des champs vides !";
     }
