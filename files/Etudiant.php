@@ -205,6 +205,19 @@ class Etudiant extends Db {
         return $students;
     }
 
+    public function toutEtudiants(){
+        $students = [];
+
+        $sttm = $this->db->prepare("SELECT * FROM etudiant");
+        if($sttm->execute())
+        {
+            $students = $sttm->fetchAll();
+            return $students;
+        }
+
+        return $students;
+    }
+
     public function signup()
     {
 
@@ -228,6 +241,21 @@ class Etudiant extends Db {
 
         return false;
 
+    }
+
+    public function getEtudiant($id)
+    {
+        $student = "";
+
+        $sttm = $this->db->prepare("SELECT * FROM etudiant where id=:id");
+        $sttm->bindParam(':id', $id);
+        if($sttm->execute())
+        {
+            $student = $sttm->fetch(PDO::FETCH_ASSOC);
+            return $student;
+        }
+
+        return $student;
     }
 
 

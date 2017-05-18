@@ -2,9 +2,17 @@
 
     <div class="container" >
         <div class="row">
-            <h3>Inscription</h3>
+
             <div class="col-lg-8 col-lg-offset-2">
+                <p class="text-center"><h3><i class="fa fa-user-circle-o"></i> Inscription</h3></p>
                 <form action="signup.php" method="POST" autocomplete="off" >
+                    <div class="form-group">
+                        <label for="">Type</label>
+                        <select name="type" id="type_compte" class="form-control" >
+                            <option selected value="etudiant">Etudiant</option>
+                            <option value="professeur">Professeur</option>
+                        </select>
+                    </div>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -61,7 +69,7 @@
                     </div>
                     <div class="form-group professeur">
                         <label for="">SOM</label>
-                        <input type="number" size="7" name="som" class="form-control" placeholder="SOM" >
+                        <input type="number" min="1111111" max="9999999" " name="som" class="form-control" placeholder="SOM" >
                     </div>
                     <div class="form-group">
                         <label for="">Email</label>
@@ -74,13 +82,6 @@
                     <div class="form-group">
                         <label for="">Mot de passe : </label>
                         <input type="password" class="form-control" name="password" placeholder="Mot de passe" >
-                    </div>
-                    <div class="form-group">
-                        <label for="">Type</label>
-                        <select name="type" id="type_compte" class="form-control" >
-                            <option selected value="etudiant">Etudiant</option>
-                            <option value="professeur">Professeur</option>
-                        </select>
                     </div>
                     <div class="form-group">
                         <button type="submit" name="signup" class="btn btn-success btn-lg" > S'inscrire </button>

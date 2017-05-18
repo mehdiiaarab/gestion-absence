@@ -2,10 +2,10 @@
 
 <div class="container" >
     <div class="row">
-        <h3>Connexion</h3>
+
         <div class="col-lg-4 col-lg-offset-4">
             <form action="login.php" method="POST" autocomplete="off" >
-
+                <p class="text-center"><h3><i class="fa fa-user-circle-o"></i> Connexion</h3></p>
                 <div class="form-group">
                     <label for="">Username</label>
                     <input type="text" name="username" class="form-control" placeholder="Username" >

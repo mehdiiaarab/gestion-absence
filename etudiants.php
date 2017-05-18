@@ -2,8 +2,13 @@
 
     require_once "header.php";
     $student = new Etudiant();
+    $students = [];
 
-    $students = $student->listEtudiants();
+    if(isset($_SESSION["type"]) && $_SESSION["type"] == "professeur" ):
+        $students = $student->listEtudiants();
+    elseif (isset($_SESSION["type"]) && $_SESSION["type"] == "admin" ):
+        $students = $student->toutEtudiants();
+    endif;
 
 ?>
 <div class="container">

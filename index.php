@@ -1,5 +1,6 @@
 <?php require_once "header.php" ?>
 <div class="container">
+
     <div class="text-center">
         <h1><i class="fa fa-graduation-cap"></i></h1>
         <h2>Gestion d'absence - GI1</h2>
@@ -8,14 +9,13 @@
 
     <!-- Professeur -->
     <?php if(isset($_SESSION["type"]) && $_SESSION["type"] == "professeur" ): ?>
-        <a href="etudiants.php" class="btn btn-sm btn-primary">Liste des étudiants</a>
-        <hr>
+        <a href="etudiants.php" class="btn btn-primary">Liste des étudiants</a>
         <?php include "alerts.php"; ?>
     <?php endif ?>
 
     <!-- Administrateur -->
     <?php if(isset($_SESSION["type"]) && $_SESSION["type"] == "admin" ): ?>
-
+        <a href="etudiants.php" class="btn btn-primary">Liste des étudiants</a>
         <?php include "alerts.php"; ?>
     <?php endif ?>
 
@@ -29,7 +29,6 @@
             <a href="login.php" class="btn btn-lg btn-primary">Se connecter</a>
             <a href="signup.php" class="btn btn-lg btn-default">S'inscrire</a>
         </div>
-        <hr>
     <?php endif ?>
 
 
