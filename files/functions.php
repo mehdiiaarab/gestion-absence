@@ -4,6 +4,38 @@ spl_autoload_register(function ($class_name) {
     require_once $class_name . '.php';
 });
 
+/* Marquer l'absence */
+
+if(isset($_POST["marquer-absence"]))
+{
+
+    if(!empty($_POST["module"]) && !empty($_POST["date_absence"])
+        && !empty($_POST["crn_horaire"]) && !empty($_POST["type_absence"]) ){
+
+        $absence = new Absence();
+        $absence->setEtudiant($_POST["id"]);
+        $absence->setTypeAbsence($_POST["type_absence"]);
+        $absence->setCrnHoraire($_POST["crn_horaire"]);
+        $absence->setProfesseur($_SESSION["id"]);
+        $absence->setModule($_POST["module"]);
+
+        if($absence->marquerAbsence()){
+
+            $_SESSION["message"] = "L'absence a été bien marquer";
+            header("Location: etudiants.php");
+            exit();
+
+        }else{
+            $_SESSION["message"] = "Erreur lors de votre action, veuillez réessayer.";
+        }
+
+
+    }else{
+        $_SESSION["message"] = "Vous avez laisser des champs vides !";
+    }
+
+}
+
 
 /* Connexion */
 
@@ -93,5 +125,6 @@ if(isset($_POST['signup']))
     }else{
         $_SESSION["message"] = "Vous avez laisser des champs vides !";
     }
+
 
 }

@@ -4,7 +4,7 @@
 class Absence extends Db
 {
 
-    private $id, $etudiant, $crn_horaire, $type_absence, $is_old;
+    private $id, $etudiant, $crn_horaire, $type_absence, $is_old, $professeur, $module;
     /**
      * Utilisateur constructor.
      * @param $login
@@ -15,6 +15,25 @@ class Absence extends Db
         parent::__construct();
         $this->is_old = 0;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getModule()
+    {
+        return $this->module;
+    }
+
+    /**
+     * @param mixed $module
+     */
+    public function setModule($module)
+    {
+        $this->module = $module;
+    }
+
+
+
 
     /**
      * @return mixed
@@ -80,10 +99,42 @@ class Absence extends Db
         $this->is_old = $is_old;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getProfesseur()
+    {
+        return $this->professeur;
+    }
+
+    /**
+     * @param mixed $professeur
+     */
+    public function setProfesseur($professeur)
+    {
+        $this->professeur = $professeur;
+    }
+
+    public function marquerAbsence()
+    {
+        $sttm = $this->db->prepare("INSERT INTO absence (id_etudiant, crn_horaire, type_absence, module, professeur) VALUE (:id_etudiant, :crn_horaire, :type_absence, :module, :professeur)");
+
+        $sttm->bindParam(':id_etudiant', $this->etudiant);
+        $sttm->bindParam(':crn_horaire', $this->crn_horaire);
+        $sttm->bindParam(':type_absence', $this->type_absence);
+        $sttm->bindParam(':module', $this->module);
+        $sttm->bindParam(':professeur', $this->professeur);
 
 
+        if($sttm->execute())
+        {
+            return true;
+        }
+
+        return false;
 
 
+    }
 
 
 }
