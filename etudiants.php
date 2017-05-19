@@ -19,6 +19,7 @@
                 <th>#</th>
                 <th>Nom</th>
                 <th>Prénom</th>
+                <th>CNE</th>
                 <th>Tél</th>
                 <th>Email</th>
                 <th>Date naissance</th>
@@ -27,8 +28,9 @@
             <?php foreach($students as $s): ?>
             <tr>
                 <td><?=$s["id"] ?></td>
-                <td><?=$s["nom"] ?></td>
-                <td><?=$s["prenom"] ?></td>
+                <td><a href="etudiant.php?id=<?=$s['id'] ?>"><?=$s["nom"] ?></a></td>
+                <td><a href="etudiant.php?id=<?=$s['id'] ?>"><?=$s["prenom"] ?></a></td>
+                <td><?=$s["cne"] ?></td>
                 <td><?=$s["telephone"] ?></td>
                 <td><?=$s["email"] ?></td>
                 <td><?=$s["date_naissance"] ?></td>

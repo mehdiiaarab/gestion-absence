@@ -259,4 +259,21 @@ class Etudiant extends Db {
     }
 
 
+    public function calculerAbsences($id)
+    {
+
+        $nombreAbsences = 0;
+
+        $sttm = $this->db->prepare("SELECT count(id_etudiant) FROM absence where id_etudiant=:id and is_old=0 ");
+        $sttm->bindParam(':id', $id);
+        if($sttm->execute())
+        {
+            $nombreAbsences = $sttm->fetch(PDO::FETCH_ASSOC);
+            return $nombreAbsences;
+        }
+
+        return $nombreAbsences;
+    }
+
+
 }

@@ -9,19 +9,53 @@
 
     <!-- Professeur -->
     <?php if(isset($_SESSION["type"]) && $_SESSION["type"] == "professeur" ): ?>
-        <a href="etudiants.php" class="btn btn-primary">Liste des étudiants</a>
+        <div class="row text-center">
+            <div class="form-group">
+                <a href="etudiants.php" class="btn btn-primary btn-lg"><i class="fa fa-user-circle-o"></i> Liste des étudiants</a>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="form-group">
+                <a href="absences_par_prof.php" class="btn btn-warning btn-lg"><i
+                            class="fa fa-check-circle-o"></i>
+                    Liste des absences que j'ai marqué</a>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="form-group">
+                <a href="absences.php" class="btn btn-default btn-lg"><i class="fa fa-list"></i> Les absences</a>
+            </div>
+        </div>
         <?php include "alerts.php"; ?>
     <?php endif ?>
 
     <!-- Administrateur -->
     <?php if(isset($_SESSION["type"]) && $_SESSION["type"] == "admin" ): ?>
-        <a href="etudiants.php" class="btn btn-primary">Liste des étudiants</a>
+        <div class="row text-center">
+            <div class="form-group">
+                <a href="etudiants.php" class="btn btn-primary btn-lg"><i
+                            class="fa fa-user-circle-o"></i> Liste des
+                                                             étudiants</a>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="form-group">
+                <a href="absences_par_prof.php" class="btn btn-warning btn-lg"><i
+                            class="fa fa-check-circle-o"></i>
+                    Liste des absences que j'ai marqué</a>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="form-group">
+                <a href="absences.php" class="btn btn-default btn-lg"><i class="fa fa-list"></i> Les absences</a>
+            </div>
+        </div>
         <?php include "alerts.php"; ?>
     <?php endif ?>
 
     <!-- Etudiant -->
     <?php if(isset($_SESSION["type"]) && $_SESSION["type"] == "etudiant" ): ?>
-        <a href="absence.php" class="btn btn-lg btn-primary">Mes absences</a>
+        <a href="absence_etudiant.php" class="btn btn-lg btn-primary">Mes absences</a>
     <?php endif ?>
 
     <?php if(!isset($_SESSION["id"])) :?>
@@ -30,8 +64,6 @@
             <a href="signup.php" class="btn btn-lg btn-default">S'inscrire</a>
         </div>
     <?php endif ?>
-
-
 
 </div>
 <?php require_once "footer.php" ?>

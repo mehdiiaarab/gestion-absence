@@ -18,6 +18,7 @@ if(isset($_POST["marquer-absence"]))
         $absence->setCrnHoraire($_POST["crn_horaire"]);
         $absence->setProfesseur($_SESSION["id"]);
         $absence->setModule($_POST["module"]);
+        $absence->setDateAbsence($_POST["date_absence"]);
 
         if($absence->marquerAbsence()){
 
