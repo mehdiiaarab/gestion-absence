@@ -38,28 +38,28 @@ $absences = $a->listAbsenceParEtudiant($_GET["id"]);
 </div>
 <script src="./js/jquery-3.2.1.min.js" ></script>
 <script src="./js/bootstrap.min.js" ></script>
-<script src="./js/jspdf.debug.js" ></script>
+<script src="./js/jspdf.min.js" ></script>
+<script src="./js/jspdf.plugin.autotable.js" ></script>
 <script src="./js/app.js" ></script>
 
 <script>
-    var doc = new jsPDF();
+    var columns = ["Module", "Date absence", "Créneau horaire", "Justification"];
+    var rows = [];
 
-    // We'll make our own renderer to skip this editor
-    var specialElementHandlers = {
-        '#editor': function(element, renderer){
-            return true;
+    <?php foreach ($absences as $a): ?>
+      var row = ["<?=$a['module'] ?>","<?=$a['date_absence'] ?>", "<?=$a['crn_horaire'] ?>", "<?=$a['type_absence'] ?>"];
+      rows.push(row);
+    <?php endforeach; ?>
+
+    var doc = jsPDF();
+    doc.autoTable(columns, rows, {
+        margin: {top: 50},
+        addPageContent: function(data) {
+            doc.text("<?=$etudiant['nom'].' '.$etudiant['prenom'] ?>", 40, 30);
         }
-    };
-
-    // All units are in the set measurement for the document
-    // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
-    doc.fromHTML($('body').get(0), 15, 15, {
-        'width': 170,
-        'elementHandlers': specialElementHandlers
     });
 
-    doc.save('absences-<?=$etudiant["nom"]; ?>.pdf');
-
+    doc.save("<?=$etudiant['nom'].' '.$etudiant['prenom'] ?>");
 </script>
 
 </body>

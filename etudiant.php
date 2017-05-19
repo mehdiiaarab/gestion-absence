@@ -5,6 +5,8 @@ $e = new Etudiant();
 $etudiant = $e->getEtudiant($_GET["id"]);
 
 $nombreAbsences = $e->calculerAbsences($_GET["id"]);
+$a = new Absence();
+$absences = $a->listAbsenceParEtudiant($_GET["id"]);
 
 ?>
 
@@ -32,14 +34,25 @@ $nombreAbsences = $e->calculerAbsences($_GET["id"]);
     </div>
     <div class="row">
         <h3>Les absences</h3>
-        <table>
+        <table class="table table-bordered" >
             <tr>
                 <th>Module</th>
                 <th>Date absence</th>
+                <th>Justification</th>
                 <?php if($_SESSION["type"] == "admin"): ?>
                     <th><i class="fa fa-trash-o"></i> Suppr.</th>
                 <?php endif; ?>
             </tr>
+            <?php foreach($absences as $a): ?>
+            <tr>
+                <td><?=$a["module"] ?></td>
+                <td><?=$a["date_absence"] ?></td>
+                <td><?=$a["type_absence"] ?></td>
+                <?php if($_SESSION["type"] == "admin"): ?>
+                    <td><a href="deleteAbsence.php?id=<?=$a['id'] ?>"><i class="fa fa-trash-o"></i></a></td>
+                <?php endif; ?>
+            </tr>
+            <?php endforeach; ?>
         </table>
     </div>
 </div>
