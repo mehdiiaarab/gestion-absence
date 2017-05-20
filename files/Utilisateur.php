@@ -116,6 +116,21 @@ class Utilisateur extends Db
                             $_SESSION["prenom"] = $prenom;
                             $_SESSION["som"] = $som;
                         endif;
+                        break;
+
+                    case "etudiant":
+                        $sttm2 = $this->db->prepare("SELECT * FROM etudiant WHERE id_user = :id");
+                        $sttm2->bindParam(':id', $id);
+                        if($sttm2->execute()):
+                            $etudiant = $sttm2->fetch(PDO::FETCH_ASSOC);
+                            extract($etudiant);
+                            $_SESSION["nom"] = $nom;
+                            $_SESSION["prenom"] = $prenom;
+                            $_SESSION["cne"] = $cne;
+                            $_SESSION["id_etudiant"] = $id;
+                        endif;
+                        break;
+
                 }
 
 

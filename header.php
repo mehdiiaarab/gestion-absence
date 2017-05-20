@@ -35,7 +35,7 @@
                 <?php if(isset($_SESSION["login"]) && $_SESSION["type"] == "admin" ): ?>
                     <li><a href="index.php"> <i class="fa fa-dashboard"></i> <b>ADMIN</b></a></li>
                 <?php elseif(isset($_SESSION["type"]) && $_SESSION["type"] == "etudiant" ): ?>
-                    <li><a href="etudiant.php"> <i class="fa fa-dashboard"></i> Mes absences</a></li>
+                    <li><a href="etudiant.php?id=<?=$_SESSION['id_etudiant'] ?>"> <i class="fa fa-dashboard"></i> Mes absences</a></li>
                 <?php elseif(isset($_SESSION["type"]) && $_SESSION["type"] == "professeur" ): ?>
                     <li><a href="index.php"> <i class="fa fa-dashboard"></i> <?=$_SESSION["nom"] ?></a></li>
                 <?php endif; ?>

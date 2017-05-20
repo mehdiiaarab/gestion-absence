@@ -62,7 +62,7 @@
 
     <!-- Etudiant -->
     <?php if(isset($_SESSION["type"]) && $_SESSION["type"] == "etudiant" ): ?>
-        <a href="absence_etudiant.php" class="btn btn-lg btn-primary">Mes absences</a>
+        <a href="etudiant.php?id=<?=$_SESSION['id_etudiant'] ?>" class="btn btn-lg btn-primary">Mes absences</a>
     <?php endif ?>
 
     <?php if(!isset($_SESSION["id"])) :?>
