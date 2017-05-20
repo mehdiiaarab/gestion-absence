@@ -17,7 +17,7 @@ $modules = $modules->listModules();
                 <div class="panel-body">
                     <h4>CNE : <?=$etudiant["cne"] ?></h4>
                     <h4>EMAIL : <a target="_blank" href="mailto:<?=$etudiant["email"] ?>"  ><?=$etudiant["email"] ?></a></h4>
-                    <h4>Téléphone : <?=$etudiant["email"] ?></h4>
+                    <h4>Téléphone : <?=$etudiant["telephone"] ?></h4>
                     <hr>
                     <form action="marquer_absence.php" method="POST">
                         <input type="hidden" name="id" value="<?=$etudiant["id"]; ?>" >

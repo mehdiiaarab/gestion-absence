@@ -23,9 +23,7 @@
         </div>
         <div class="row text-center">
             <div class="form-group">
-                <a href="absences_par_prof.php" class="btn btn-warning btn-lg"><i
-                            class="fa fa-check-circle-o"></i>
-                    Liste des absences que j'ai marqué</a>
+                <a href="absences_par_prof.php" class="btn btn-warning btn-lg"><i class="fa fa-check-circle-o"></i>Liste des absences que j'ai marqué</a>
             </div>
         </div>
         <div class="row text-center">
