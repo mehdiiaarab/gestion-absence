@@ -8,6 +8,9 @@ if($absence->deleteAbsence($_GET["id"])):
     if($_SESSION["type"] == "professeur"):
         header("Location: absences_par_prof.php");
         exit();
+    else:
+        header("Location: absences.php");
+        exit();
     endif;
 
 endif;
