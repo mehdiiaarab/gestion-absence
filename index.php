@@ -1,4 +1,11 @@
-<?php require_once "header.php" ?>
+<?php
+
+    require_once "header.php";
+    $a = new Absence();
+    $alerts = $a->alertsAbsence();
+
+
+?>
 <div class="container">
 
     <div class="text-center">

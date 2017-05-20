@@ -160,6 +160,10 @@ class Absence extends Db
     public function listerAbsencesParProf()
     {
 
+        /*
+        on initialise 2 tableau absences, '_' c'est le tableau temporaire
+         */
+
         $absences_ = $absences =  [];
 
         $sttm = $this->db->prepare("SELECT * FROM absence where professeur=:id and is_old=0");
@@ -289,6 +293,26 @@ class Absence extends Db
         }
 
         return $absences;
+
+    }
+
+
+    public function alertsAbsence()
+    {
+        /* Tableau */
+        $alerts = [];
+
+        $sttm = $this->db->prepare("SELECT count(a.id), a.id_etudiant, a.is_old, e.nom, e.prenom FROM absence a LEFT JOIN etudiant e on a.id_etudiant = e.id where a.is_old=0 and a.type_absence='Absence non-justifiée' GROUP BY a.id_etudiant");
+
+        if($sttm->execute()){
+
+            $alerts = $sttm->fetchAll();
+            return $alerts;
+
+        }
+
+        return $alerts;
+
 
     }
 
