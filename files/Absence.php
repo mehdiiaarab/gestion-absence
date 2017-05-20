@@ -355,4 +355,18 @@ class Absence extends Db
 
     }
 
+
+    public function remettreZeroAbsences()
+    {
+
+        $sttm = $this->db->prepare("UPDATE absence set is_old=1");
+        if($sttm->execute())
+        {
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
 }

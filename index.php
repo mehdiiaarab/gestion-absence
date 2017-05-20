@@ -40,9 +40,7 @@
     <?php if(isset($_SESSION["type"]) && $_SESSION["type"] == "admin" ): ?>
         <div class="row text-center">
             <div class="form-group">
-                <a href="etudiants.php" class="btn btn-primary btn-lg"><i
-                            class="fa fa-user-circle-o"></i> Liste des
-                                                             étudiants</a>
+                <a href="etudiants.php" class="btn btn-primary btn-lg"><i class="fa fa-user-circle-o"></i> Liste des étudiants</a>
             </div>
         </div>
         <div class="row text-center">
