@@ -57,6 +57,17 @@
                 <a href="absences.php" class="btn btn-default btn-lg"><i class="fa fa-list"></i> Les absences</a>
             </div>
         </div>
+        <div class="row text-center">
+            <div class="form-group">
+                <a href="zeroAbsences.php" class="btn btn-default btn-lg">Remettre a zéro les absences</a>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="form-group">
+                <a href="oldAbsences.php" class="btn btn-default btn-lg">Les anciennes absences</a>
+            </div>
+        </div>
+
         <?php include "alerts.php"; ?>
     <?php endif ?>
 
