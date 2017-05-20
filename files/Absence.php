@@ -296,6 +296,45 @@ class Absence extends Db
 
     }
 
+    public function listAbsencesOld()
+    {
+
+        $absences_ = $absences =  [];
+
+        $sttm = $this->db->prepare("SELECT * FROM absence where is_old=1");
+
+        if($sttm->execute())
+        {
+            $absences_ = $sttm->fetchAll();
+
+            foreach ($absences_ as $a)
+            {
+                $sttm2 = $this->db->prepare("SELECT * FROM etudiant where id=:id");
+                $sttm2->bindParam(":id", $a["id_etudiant"]);
+
+                if($sttm2->execute())
+                {
+
+                    $etudiant = $sttm2->fetch(PDO::FETCH_ASSOC);
+                    $a["nom"] = $etudiant["nom"];
+                    $a["prenom"] = $etudiant["prenom"];
+                    $a["cne"] = $etudiant["cne"];
+                    $a["email"] = $etudiant["email"];
+
+                    $absences [] = $a;
+
+
+                }
+
+            }
+
+            return $absences;
+        }
+
+        return $absences;
+
+    }
+
 
     public function alertsAbsence()
     {
