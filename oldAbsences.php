@@ -9,8 +9,8 @@ $absences = $absences->listAbsencesOld();
 
 
 <div class="container">
-    <h3>Liste des absences des étudiants</h3>
-    <h4><a href="absences_etudiants_pdf.php" class="btn btn-primary btn-lg"><i class="fa fa-file-pdf-o"></i> Compte rendu des absences</a></h4>
+    <h3>Liste des anciennes absences des étudiants</h3>
+    <h4><a href="absences_etudiants_old_pdf.php" class="btn btn-primary btn-lg"><i class="fa fa-file-pdf-o"></i> Compte rendu des absences</a></h4>
     <hr>
     <table class="table">
         <tr>
