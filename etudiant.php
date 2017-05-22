@@ -18,7 +18,7 @@ $absences = $a->listAbsenceParEtudiant($_GET["id"]);
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h4>CNE : <?= $etudiant["cne"]; ?></h4>
-                        <h4>Email : <?= $etudiant["email"]; ?></h4>
+                        <h4>Email : <a target="_blank" href="mailto:<?=$etudiant["email"]; ?>"><?= $etudiant["email"]; ?></a></h4>
                         <h4>Téléphone : <?= $etudiant["telephone"]; ?></h4>
                         <h4>Lieu de naissance : <?= $etudiant["lieu_naissance"]; ?></h4>
                     </div>
