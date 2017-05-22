@@ -24,6 +24,11 @@
                 <th>Email</th>
                 <th>Date naissance</th>
                 <th>Action</th>
+                <?php 
+                    if(isset($_SESSION["type"]) && $_SESSION["type"] == "admin" ):
+                    echo "<th>Modifier</th>"; 
+                    endif
+                    ?>
             </tr>
             <?php foreach($students as $s): ?>
             <tr>
@@ -35,6 +40,12 @@
                 <td><?=$s["email"] ?></td>
                 <td><?=$s["date_naissance"] ?></td>
                 <td><a href="marquer_absence.php?id=<?=$s['id'] ?>" class="btn btn-sm btn-warning"><i class="fa fa-flag-o"></i> Marquer absence</a></td>
+                <?php 
+                   if(isset($_SESSION["type"]) && $_SESSION["type"] == "admin" ):
+                   echo "<td><a href='modifier_etudiant.php?id=".$s['id']."' class='btn btn-sm btn-primary'><i class='fa fa-cog'></i> Modifier infos</a></td>"; 
+                   endif
+                ?>
+
             </tr>
             <?php endforeach; ?>
         </table>

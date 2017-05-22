@@ -1,6 +1,7 @@
 <?php
 
-class Etudiant extends Db {
+class Etudiant extends Db
+{
 
     private $id, $id_user, $cin, $nom, $cne, $prenom, $date_naissance, $adresse, $lieu_naissance, $telephone, $email;
 
@@ -188,7 +189,6 @@ class Etudiant extends Db {
         $this->email = $email;
     }
 
-
     public function listEtudiants()
     {
 
@@ -196,8 +196,7 @@ class Etudiant extends Db {
 
         $sttm = $this->db->prepare("SELECT e.id, e.nom, e.prenom, e.email, e.cne, e.date_naissance, e.telephone, e.email FROM etudiant e LEFT JOIN module m on m.enseigne_par=:id_enseignant");
         $sttm->bindParam(':id_enseignant', $_SESSION["id"]);
-        if($sttm->execute())
-        {
+        if ($sttm->execute()) {
             $students = $sttm->fetchAll();
             return $students;
         }
@@ -205,12 +204,12 @@ class Etudiant extends Db {
         return $students;
     }
 
-    public function toutEtudiants(){
+    public function toutEtudiants()
+    {
         $students = [];
 
         $sttm = $this->db->prepare("SELECT * FROM etudiant");
-        if($sttm->execute())
-        {
+        if ($sttm->execute()) {
             $students = $sttm->fetchAll();
             return $students;
         }
@@ -234,8 +233,7 @@ class Etudiant extends Db {
         $sttm->bindParam(':telephone', $this->telephone);
         $sttm->bindParam(':email', $this->email);
 
-        if($sttm->execute())
-        {
+        if ($sttm->execute()) {
             return true;
         }
 
@@ -249,8 +247,7 @@ class Etudiant extends Db {
 
         $sttm = $this->db->prepare("SELECT * FROM etudiant where id=:id");
         $sttm->bindParam(':id', $id);
-        if($sttm->execute())
-        {
+        if ($sttm->execute()) {
             $student = $sttm->fetch(PDO::FETCH_ASSOC);
             return $student;
         }
@@ -258,6 +255,23 @@ class Etudiant extends Db {
         return $student;
     }
 
+    public function getEtudiantToModify($id)
+    {
+        $student = "";
+
+        $sttm = $this->db->prepare("SELECT etudiant.*, utilisateur.login, utilisateur.password
+            FROM etudiant
+            INNER JOIN utilisateur
+            ON etudiant.id_user=utilisateur.id
+            WHERE etudiant.id = :id;");
+        $sttm->bindParam(':id', $id);
+        if ($sttm->execute()) {
+            $student = $sttm->fetch(PDO::FETCH_ASSOC);
+            return $student;
+        }
+
+        return $student;
+    }
 
     public function calculerAbsences($id)
     {
@@ -266,8 +280,7 @@ class Etudiant extends Db {
 
         $sttm = $this->db->prepare("SELECT count(id_etudiant) FROM absence where id_etudiant=:id and is_old=0 ");
         $sttm->bindParam(':id', $id);
-        if($sttm->execute())
-        {
+        if ($sttm->execute()) {
             $nombreAbsences = $sttm->fetch(PDO::FETCH_ASSOC);
             return $nombreAbsences;
         }
@@ -275,5 +288,32 @@ class Etudiant extends Db {
         return $nombreAbsences;
     }
 
+    public function update_student($etd)
+    {
+
+        $sttm = $this->db->prepare("UPDATE etudiant
+        JOIN utilisateur ON etudiant.id_user = utilisateur.id
+        SET utilisateur.login = :login, utilisateur.password = :password, etudiant.nom = :nom,etudiant.prenom = :prenom, etudiant.cin = :cin, etudiant.cne = :cne, etudiant.email = :email, etudiant.date_naissance = :date_naissance, etudiant.adresse = :adresse, etudiant.lieu_naissance = :lieu_naissance, etudiant.telephone = :telephone WHERE etudiant.id = :id");
+
+        $sttm->bindParam(':id', $etd['id']);
+        $sttm->bindParam(':cin', $etd['cin']);
+        $sttm->bindParam(':nom', $etd['nom']);
+        $sttm->bindParam(':cne', $etd['cne']);
+        $sttm->bindParam(':prenom', $etd['prenom']);
+        $sttm->bindParam(':date_naissance', $etd['date_naissance']);
+        $sttm->bindParam(':adresse', $etd['adresse']);
+        $sttm->bindParam(':lieu_naissance', $etd['lieu_naissance']);
+        $sttm->bindParam(':telephone', $etd['telephone']);
+        $sttm->bindParam(':email', $etd['email']);
+        $sttm->bindParam(':login', $etd['login']);
+        $sttm->bindParam(':password', $etd['password']);
+
+        if ($sttm->execute()) {
+            return true;
+        }
+
+        return false;
+
+    }
 
 }

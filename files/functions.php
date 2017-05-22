@@ -6,11 +6,10 @@ spl_autoload_register(function ($class_name) {
 
 /* Marquer l'absence */
 
-if(isset($_POST["marquer-absence"]))
-{
+if (isset($_POST["marquer-absence"])) {
 
-    if(!empty($_POST["module"]) && !empty($_POST["date_absence"])
-        && !empty($_POST["crn_horaire"]) && !empty($_POST["type_absence"]) ){
+    if (!empty($_POST["module"]) && !empty($_POST["date_absence"])
+        && !empty($_POST["crn_horaire"]) && !empty($_POST["type_absence"])) {
 
         $absence = new Absence();
         $absence->setEtudiant($_POST["id"]);
@@ -20,40 +19,37 @@ if(isset($_POST["marquer-absence"]))
         $absence->setModule($_POST["module"]);
         $absence->setDateAbsence($_POST["date_absence"]);
 
-        if($absence->marquerAbsence()){
+        if ($absence->marquerAbsence()) {
 
             $_SESSION["message"] = "L'absence a été bien marquer";
             header("Location: etudiants.php");
             exit();
 
-        }else{
+        } else {
             $_SESSION["message"] = "Erreur lors de votre action, veuillez réessayer.";
         }
 
-
-    }else{
+    } else {
         $_SESSION["message"] = "Vous avez laisser des champs vides !";
     }
 
 }
 
-
 /* Connexion */
 
-if(isset($_POST["connexion"])){
+if (isset($_POST["connexion"])) {
 
-    if(!empty($_POST["username"]) && !empty($_POST["password"])){
-
+    if (!empty($_POST["username"]) && !empty($_POST["password"])) {
 
         $utilisteur = new Utilisateur();
         extract($_POST);
         $utilisteur->setLogin($username);
         $utilisteur->setPassword($password);
-        if($utilisteur->connexion()){
+        if ($utilisteur->connexion()) {
             $_SESSION["message"] = "vous êtes maintenant Connecté !";
             header("Location: index.php");
             exit();
-        }else{
+        } else {
             $_SESSION["message"] = "Mot de pass / username Invalid !";
         }
 
@@ -61,25 +57,21 @@ if(isset($_POST["connexion"])){
 
 }
 
-
 /* Inscription */
-if(isset($_POST['signup']))
-{
+if (isset($_POST['signup'])) {
 
-    if( !empty($_POST["username"]) && !empty($_POST["password"]) && !empty($_POST["type"]) && !empty($_POST["nom"]) && !empty($_POST["prenom"]) && !empty($_POST["email"]) && !empty($_POST["telephone"])  )
-    {
+    if (!empty($_POST["username"]) && !empty($_POST["password"]) && !empty($_POST["type"]) && !empty($_POST["nom"]) && !empty($_POST["prenom"]) && !empty($_POST["email"]) && !empty($_POST["telephone"])) {
 
         $utilisteur = new Utilisateur(
             $_POST["username"], $_POST["password"], $_POST["type"]
         );
 
-        if($utilisteur->exists($_POST["email"])){
+        if ($utilisteur->exists($_POST["email"])) {
             $_SESSION["message"] = "Ce compte existe déjà.";
-        }else{
-            if($utilisteur->inscription())
-            {
+        } else {
+            if ($utilisteur->inscription()) {
 
-                if($_POST["type"] == "etudiant"){
+                if ($_POST["type"] == "etudiant") {
 
                     $etudiant = new Etudiant();
                     $etudiant->setNom($_POST["nom"]);
@@ -93,13 +85,13 @@ if(isset($_POST['signup']))
                     $etudiant->setTelephone($_POST["telephone"]);
                     $etudiant->setIdUser($utilisteur->getId());
 
-                    if($etudiant->signup()){
+                    if ($etudiant->signup()) {
                         $_SESSION["message"] = "Vous êtes maintenant inscrit ! merci de se connecter utilisant votre username et mot de passe";
                         header("Location: login.php");
                         exit();
                     }
 
-                }elseif($_POST["type"] == "professeur" ){
+                } elseif ($_POST["type"] == "professeur") {
 
                     /* same thing for professeur */
                     $professeur = new Professeur();
@@ -110,22 +102,53 @@ if(isset($_POST['signup']))
                     $professeur->setTelephone($_POST["telephone"]);
                     $professeur->setIdUser($utilisteur->getId());
 
-                    if($professeur->signup()){
+                    if ($professeur->signup()) {
                         $_SESSION["message"] = "Vous êtes maintenant inscrit ! merci de se connecter utilisant votre username et mot de passe";
                         header("Location: login.php");
                         exit();
                     }
-            }
+                }
 
-            }else{
+            } else {
 
                 $_SESSION["message"] = "Erreur lors de votre action, veuillez réessayer.";
 
             }
         }
-    }else{
+    } else {
         $_SESSION["message"] = "Vous avez laisser des champs vides !";
     }
 
+}
+
+/* Inscription */
+if (isset($_POST['modifier_etudiant'])) {
+
+    if (!empty($_POST["username"]) && !empty($_POST["password"]) && !empty($_POST["nom"]) && !empty($_POST["prenom"]) && !empty($_POST["email"]) && !empty($_POST["telephone"]) && !empty($_POST["cin"]) && !empty($_POST["cne"]) && !empty($_POST["lieu_naissance"])) {
+        $etd = new Etudiant();
+        $etudiant                   = [];
+        $etudiant['id']            = $_POST["id"];
+        $etudiant['nom']            = $_POST["nom"];
+        $etudiant['prenom']         = $_POST["prenom"];
+        $etudiant['cin']            = $_POST["cin"];
+        $etudiant['cne']            = $_POST["cne"];
+        $etudiant['date_naissance'] = $_POST["date_naissance"];
+        $etudiant['email']          = $_POST["email"];
+        $etudiant['lieu_naissance'] = $_POST["lieu_naissance"];
+        $etudiant['telephone']      = $_POST["telephone"];
+        $etudiant['adresse']        = $_POST["adresse"];
+        $etudiant['login']          = $_POST["username"];
+        $etudiant['password']       = $_POST["password"];
+
+        if ($etd->update_student($etudiant)) {
+            $_SESSION["message"] = "opération terminée avec succès !";
+            header("Location: etudiants.php");
+            exit();
+        } else {
+            $_SESSION["message"] = "Erreur lors de votre action, veuillez réessayer.";
+        }
+    } else {
+        $_SESSION["message"] = "Vous avez laisser des champs vides !";
+    }
 
 }
