@@ -4,10 +4,7 @@ session_start();
 require "./files/database.php";
 require "./files/functions.php";
 
-$e = new Etudiant();
-
-$a = new Absence();
-$absences = $a->listAbsences();
+$absences = listAbsences();
 
 
 ?>
@@ -57,10 +54,13 @@ $absences = $a->listAbsences();
 
     var doc = jsPDF();
     doc.autoTable(columns, rows, {
-        margin: {top: 50},
         addPageContent: function(data) {
-            doc.text("Liste des absences", 40, 30);
-        }
+            doc.text("Liste des absences", 10, 10);
+        },
+        margin: {horizontal: 7},
+        bodyStyles: {valign: 'top'},
+        styles: {overflow: 'linebreak', columnWidth: 'wrap'},
+        columnStyles: {text: {columnWidth: 'auto'}}
     });
 
     doc.save("liste-absences");

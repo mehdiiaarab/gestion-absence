@@ -134,27 +134,7 @@ class Absence extends Db
         $this->professeur = $professeur;
     }
 
-    public function marquerAbsence()
-    {
-        $sttm = $this->db->prepare("INSERT INTO absence (id_etudiant, crn_horaire, type_absence, module, professeur, date_absence) VALUE (:id_etudiant, :crn_horaire, :type_absence, :module, :professeur, :date_absence)");
 
-        $sttm->bindParam(':id_etudiant', $this->etudiant);
-        $sttm->bindParam(':crn_horaire', $this->crn_horaire);
-        $sttm->bindParam(':type_absence', $this->type_absence);
-        $sttm->bindParam(':module', $this->module);
-        $sttm->bindParam(':professeur', $this->professeur);
-        $sttm->bindParam(':date_absence', $this->date_absence);
-
-
-        if($sttm->execute())
-        {
-            return true;
-        }
-
-        return false;
-
-
-    }
 
 
     public function listerAbsencesParProf()

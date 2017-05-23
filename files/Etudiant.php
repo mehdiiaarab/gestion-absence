@@ -189,68 +189,7 @@ class Etudiant extends Db {
     }
 
 
-    public function listEtudiants()
-    {
 
-        $students = [];
-
-        $sttm = $this->db->prepare("SELECT e.id, e.nom, e.prenom, e.email, e.cne, e.date_naissance, e.telephone, e.email FROM etudiant e LEFT JOIN module m on m.enseigne_par=:id_enseignant");
-        $sttm->bindParam(':id_enseignant', $_SESSION["id"]);
-        if($sttm->execute())
-        {
-            $students = $sttm->fetchAll();
-            return $students;
-        }
-
-        return $students;
-    }
-
-    public function toutEtudiants(){
-        $students = [];
-
-        $sttm = $this->db->prepare("SELECT * FROM etudiant");
-        if($sttm->execute())
-        {
-            $students = $sttm->fetchAll();
-            return $students;
-        }
-
-        return $students;
-    }
-
-
-
-    public function getEtudiant($id)
-    {
-        $student = "";
-
-        $sttm = $this->db->prepare("SELECT * FROM etudiant where id=:id");
-        $sttm->bindParam(':id', $id);
-        if($sttm->execute())
-        {
-            $student = $sttm->fetch(PDO::FETCH_ASSOC);
-            return $student;
-        }
-
-        return $student;
-    }
-
-
-    public function calculerAbsences($id)
-    {
-
-        $nombreAbsences = 0;
-
-        $sttm = $this->db->prepare("SELECT count(id_etudiant) FROM absence where id_etudiant=:id and is_old=0 ");
-        $sttm->bindParam(':id', $id);
-        if($sttm->execute())
-        {
-            $nombreAbsences = $sttm->fetch(PDO::FETCH_ASSOC);
-            return $nombreAbsences;
-        }
-
-        return $nombreAbsences;
-    }
 
 
 }

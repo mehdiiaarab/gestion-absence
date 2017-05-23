@@ -4,10 +4,9 @@ session_start();
 require "./files/database.php";
 require "./files/functions.php";
 
-$e = new Etudiant();
-$etudiant = $e->getEtudiant($_GET["id"]);
-$a = new Absence();
-$absences = $a->listAbsenceParEtudiant($_GET["id"]);
+$etudiant = getEtudiant($_GET["id"]);
+
+$absences = listAbsenceParEtudiant($_GET["id"]);
 
 
 ?>
@@ -53,10 +52,13 @@ $absences = $a->listAbsenceParEtudiant($_GET["id"]);
 
     var doc = jsPDF();
     doc.autoTable(columns, rows, {
-        margin: {top: 50},
         addPageContent: function(data) {
-            doc.text("<?=$etudiant['nom'].' '.$etudiant['prenom'] ?>", 40, 30);
-        }
+            doc.text("<?=$etudiant['nom'].' '.$etudiant['prenom'] ?>", 10, 10);
+        },
+        margin: {horizontal: 7},
+        bodyStyles: {valign: 'top'},
+        styles: {overflow: 'linebreak', columnWidth: 'wrap'},
+        columnStyles: {text: {columnWidth: 'auto'}}
     });
 
     doc.save("<?=$etudiant['nom'].' '.$etudiant['prenom'] ?>");

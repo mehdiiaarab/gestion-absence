@@ -25,6 +25,8 @@ function database()
 }
 
 
+/*  */
+
 function connexion($username, $password)
 {
 
@@ -183,7 +185,30 @@ function utilisateurDejaExist($email, $login){
     }
 }
 
+function marquerAbsence($etudiant, $crn_horaire, $type_absence, $module, $professeur, $date_absence)
+{
 
+    $db = database();
+
+    $sttm = $db->prepare("INSERT INTO absence (id_etudiant, crn_horaire, type_absence, module, professeur, date_absence) VALUE (:id_etudiant, :crn_horaire, :type_absence, :module, :professeur, :date_absence)");
+
+    $sttm->bindParam(':id_etudiant', $etudiant);
+    $sttm->bindParam(':crn_horaire', $crn_horaire);
+    $sttm->bindParam(':type_absence', $type_absence);
+    $sttm->bindParam(':module', $module);
+    $sttm->bindParam(':professeur', $professeur);
+    $sttm->bindParam(':date_absence', $date_absence);
+
+
+    if($sttm->execute())
+    {
+        return true;
+    }
+
+    return false;
+
+
+}
 
 
 /* Marquer l'absence */
@@ -194,15 +219,8 @@ if(isset($_POST["marquer-absence"]))
     if(!empty($_POST["module"]) && !empty($_POST["date_absence"])
         && !empty($_POST["crn_horaire"]) && !empty($_POST["type_absence"]) ){
 
-        $absence = new Absence();
-        $absence->setEtudiant($_POST["id"]);
-        $absence->setTypeAbsence($_POST["type_absence"]);
-        $absence->setCrnHoraire($_POST["crn_horaire"]);
-        $absence->setProfesseur($_SESSION["id"]);
-        $absence->setModule($_POST["module"]);
-        $absence->setDateAbsence($_POST["date_absence"]);
 
-        if($absence->marquerAbsence()){
+        if(marquerAbsence($_POST['id'], $_POST["crn_horaire"], $_POST["type_absence"], $_POST["module"], $_SESSION['id'], $_POST['id'])){
 
             $_SESSION["message"] = "L'absence a été bien marquer";
             header("Location: etudiants.php");
@@ -218,6 +236,8 @@ if(isset($_POST["marquer-absence"]))
     }
 
 }
+
+
 
 
 /* Connexion */
@@ -293,3 +313,327 @@ if(isset($_POST['signup']))
 
 
 }
+
+
+
+
+function listEtudiants()
+{
+
+    $students = [];
+
+    $db = database();
+
+    $sttm = $db->prepare("SELECT e.id, e.nom, e.prenom, e.email, e.cne, e.date_naissance, e.telephone, e.email FROM etudiant e LEFT JOIN module m on m.enseigne_par=:id_enseignant");
+    $sttm->bindParam(':id_enseignant', $_SESSION["id"]);
+    if($sttm->execute())
+    {
+        $students = $sttm->fetchAll();
+        return $students;
+    }
+
+    return $students;
+}
+
+function toutEtudiants(){
+
+    $students = [];
+
+    $db = database();
+
+    $sttm = $db->prepare("SELECT * FROM etudiant");
+    if($sttm->execute())
+    {
+        $students = $sttm->fetchAll();
+        return $students;
+    }
+
+    return $students;
+}
+
+
+
+function getEtudiant($id)
+{
+    $student = "";
+
+    $db = database();
+
+    $sttm = $db->prepare("SELECT * FROM etudiant where id=:id");
+    $sttm->bindParam(':id', $id);
+    if($sttm->execute())
+    {
+        $student = $sttm->fetch(PDO::FETCH_ASSOC);
+        return $student;
+    }
+
+    return $student;
+}
+
+
+function calculerAbsences($id)
+{
+
+    $nombreAbsences = 0;
+
+    $db = database();
+
+    $sttm = $db->prepare("SELECT count(id_etudiant) FROM absence where id_etudiant=:id and is_old=0 ");
+    $sttm->bindParam(':id', $id);
+    if($sttm->execute())
+    {
+        $nombreAbsences = $sttm->fetch(PDO::FETCH_ASSOC);
+        return $nombreAbsences;
+    }
+
+    return $nombreAbsences;
+}
+
+
+
+function listModules(){
+
+    $modules = [];
+
+    $db = database();
+
+    $sttm = $db->prepare("SELECT * FROM module");
+    if($sttm->execute())
+    {
+        $modules = $sttm->fetchAll();
+        return $modules;
+    }
+
+    return $modules;
+
+}
+
+
+function listAbsenceParEtudiant($id)
+{
+
+    $absences_ = $absences =  [];
+
+    $db = database();
+
+    $sttm = $db->prepare("SELECT * FROM absence where id_etudiant=:id and is_old=0");
+    $sttm->bindParam(":id", $id);
+
+    if($sttm->execute())
+    {
+        $absences_ = $sttm->fetchAll();
+
+        foreach ($absences_ as $a)
+        {
+            $sttm2 = $db->prepare("SELECT * FROM etudiant where id=:id");
+            $sttm2->bindParam(":id", $a["id_etudiant"]);
+
+            if($sttm2->execute())
+            {
+
+                $etudiant = $sttm2->fetch(PDO::FETCH_ASSOC);
+                $a["nom"] = $etudiant["nom"];
+                $a["prenom"] = $etudiant["prenom"];
+                $a["cne"] = $etudiant["cne"];
+                $a["email"] = $etudiant["email"];
+
+                $absences [] = $a;
+
+            }
+
+        }
+
+        return $absences;
+    }
+
+    return $absences;
+
+}
+
+function listAbsences()
+{
+
+    $absences_ = $absences =  [];
+
+    $db = database();
+
+    $sttm = $db->prepare("SELECT * FROM absence where is_old=0");
+
+    if($sttm->execute())
+    {
+        $absences_ = $sttm->fetchAll();
+
+        foreach ($absences_ as $a)
+        {
+            $sttm2 = $db->prepare("SELECT * FROM etudiant where id=:id");
+            $sttm2->bindParam(":id", $a["id_etudiant"]);
+
+            if($sttm2->execute())
+            {
+
+                $etudiant = $sttm2->fetch(PDO::FETCH_ASSOC);
+                $a["nom"] = $etudiant["nom"];
+                $a["prenom"] = $etudiant["prenom"];
+                $a["cne"] = $etudiant["cne"];
+                $a["email"] = $etudiant["email"];
+
+                $absences [] = $a;
+
+
+            }
+
+        }
+
+        return $absences;
+    }
+
+    return $absences;
+
+}
+
+
+function listAbsencesOld()
+{
+
+    $absences_ = $absences =  [];
+
+    $db = database();
+
+    $sttm = $db->prepare("SELECT * FROM absence where is_old=1");
+
+    if($sttm->execute())
+    {
+        $absences_ = $sttm->fetchAll();
+
+        foreach ($absences_ as $a)
+        {
+            $sttm2 = $db->prepare("SELECT * FROM etudiant where id=:id");
+            $sttm2->bindParam(":id", $a["id_etudiant"]);
+
+            if($sttm2->execute())
+            {
+
+                $etudiant = $sttm2->fetch(PDO::FETCH_ASSOC);
+                $a["nom"] = $etudiant["nom"];
+                $a["prenom"] = $etudiant["prenom"];
+                $a["cne"] = $etudiant["cne"];
+                $a["email"] = $etudiant["email"];
+
+                $absences [] = $a;
+
+
+            }
+
+        }
+
+        return $absences;
+    }
+
+    return $absences;
+
+}
+
+/* Cette fonction permet de calculer le nombre des absences pour chaque étudiant */
+
+function alertsAbsence()
+{
+    /* Tableau */
+    $alerts = [];
+
+    $db = database();
+
+    $sttm = $db->prepare("SELECT count(a.id), a.id_etudiant, a.is_old, e.nom, e.prenom FROM absence a LEFT JOIN etudiant e on a.id_etudiant = e.id where a.is_old=0 and a.type_absence='Absence non-justifiée' GROUP BY a.id_etudiant");
+
+    if($sttm->execute()){
+
+        $alerts = $sttm->fetchAll();
+        return $alerts;
+
+    }
+
+    return $alerts;
+
+
+}
+
+
+function remettreZeroAbsences()
+{
+
+    $db = database();
+
+    $sttm = $db->prepare("UPDATE absence set is_old=1");
+    if($sttm->execute())
+    {
+        return true;
+    }else{
+        return false;
+    }
+
+}
+
+function listerAbsencesParProf()
+{
+
+    /*
+    on initialise 2 tableau absences, '_' c'est le tableau temporaire
+     */
+
+    $absences_ = $absences =  [];
+
+    $db = database();
+
+    $sttm = $db->prepare("SELECT * FROM absence where professeur=:id and is_old=0");
+    $sttm->bindParam(":id", $_SESSION["id"]);
+
+    if($sttm->execute())
+    {
+        $absences_ = $sttm->fetchAll();
+
+        foreach ($absences_ as $a)
+        {
+            $sttm2 = $db->prepare("SELECT * FROM etudiant where id=:id");
+            $sttm2->bindParam(":id", $a["id_etudiant"]);
+
+            if($sttm2->execute())
+            {
+
+                $etudiant = $sttm2->fetch(PDO::FETCH_ASSOC);
+                $a["nom"] = $etudiant["nom"];
+                $a["prenom"] = $etudiant["prenom"];
+                $a["cne"] = $etudiant["cne"];
+                $a["email"] = $etudiant["email"];
+
+                $absences [] = $a;
+
+
+            }
+
+        }
+
+        return $absences;
+    }
+
+    return $absences;
+
+
+}
+
+
+function deleteAbsence($id)
+{
+
+    $db = database();
+
+    $sttm = $db->prepare("UPDATE absence SET is_old=1 where id=:id");
+    $sttm->bindParam(":id", $id);
+
+    if($sttm->execute())
+    {
+        return true;
+    }else{
+        return false;
+    }
+
+}
+

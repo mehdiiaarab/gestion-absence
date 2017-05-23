@@ -1,12 +1,12 @@
 <?php
 require "header.php";
 
-$e = new Etudiant();
-$etudiant = $e->getEtudiant($_GET["id"]);
 
-$nombreAbsences = $e->calculerAbsences($_GET["id"]);
-$a = new Absence();
-$absences = $a->listAbsenceParEtudiant($_GET["id"]);
+$etudiant = getEtudiant($_GET["id"]);
+
+$nombreAbsences = calculerAbsences($_GET["id"]);
+
+$absences = listAbsenceParEtudiant($_GET["id"]);
 
 ?>
 

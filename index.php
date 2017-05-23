@@ -1,8 +1,8 @@
 <?php
 
     require_once "header.php";
-    $a = new Absence();
-    $alerts = $a->alertsAbsence();
+
+    $alerts = alertsAbsence();
 
 
 ?>

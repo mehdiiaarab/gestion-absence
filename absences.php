@@ -2,8 +2,7 @@
 
 require_once "header.php";
 
-$absences = new Absence();
-$absences = $absences->listAbsences();
+$absences = listAbsences();
 
 ?>
 

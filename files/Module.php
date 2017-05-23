@@ -77,20 +77,7 @@ class Module extends Db{
         $this->enseigne_par = $enseigne_par;
     }
 
-    public function listModules(){
 
-        $modules = [];
-
-        $sttm = $this->db->prepare("SELECT * FROM module");
-        if($sttm->execute())
-        {
-            $modules = $sttm->fetchAll();
-            return $modules;
-        }
-
-        return $modules;
-
-    }
 
 
 }
