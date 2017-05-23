@@ -125,26 +125,5 @@ class Professeur extends Db {
         $this->telephone = $telephone;
     }
 
-    public function signup(){
 
-        $sttm = $this->db->prepare("INSERT INTO professeur (id_user, som, nom, prenom, email, telephone) VALUE (:id_user, :som, :nom, :prenom, :email, :telephone)");
-
-        $sttm->bindParam(':id_user', $this->id_user);
-        $sttm->bindParam(':som', $this->som);
-        $sttm->bindParam(':nom', $this->nom);
-        $sttm->bindParam(':prenom', $this->prenom);
-        $sttm->bindParam(':telephone', $this->telephone);
-        $sttm->bindParam(':email', $this->email);
-
-        if($sttm->execute())
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function exists($email){
-
-    }
 }

@@ -2,8 +2,8 @@
 
 require_once "header.php";
 
-$absences = new Absence();
-$absences = $absences->listerAbsencesParProf();
+
+$absences = listerAbsencesParProf();
 
 ?>
 

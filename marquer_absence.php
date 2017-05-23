@@ -2,10 +2,8 @@
 
 require_once "header.php";
 
-$etudiant = new Etudiant();
-$etudiant = $etudiant->getEtudiant($_GET["id"]);
-$modules = new Module();
-$modules = $modules->listModules();
+$etudiant = getEtudiant($_GET["id"]);
+$modules = listModules();
 
 ?>
 

@@ -1,13 +1,12 @@
 <?php
 
     require_once "header.php";
-    $student = new Etudiant();
     $students = [];
 
     if(isset($_SESSION["type"]) && $_SESSION["type"] == "professeur" ):
-        $students = $student->listEtudiants();
+        $students = listEtudiants();
     elseif (isset($_SESSION["type"]) && $_SESSION["type"] == "admin" ):
-        $students = $student->toutEtudiants();
+        $students = toutEtudiants();
     endif;
 
 ?>

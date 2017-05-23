@@ -1,7 +1,7 @@
 <?php 
     require_once "header.php";
-    $etudiant = new Etudiant();
-    $etudiant = $etudiant->getEtudiantToModify($_GET["id"]);
+
+    $etudiant = getEtudiantToModify($_GET["id"]);
 ?>
 
     <div class="container" >

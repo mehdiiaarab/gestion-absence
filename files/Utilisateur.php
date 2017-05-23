@@ -88,83 +88,6 @@ class Utilisateur extends Db
     }
 
 
-
-    public function connexion()
-    {
-
-        $sttm = $this->db->prepare("SELECT * FROM utilisateur WHERE login = :login AND password = :password");
-        $sttm->bindParam(':login', $this->login);
-        $sttm->bindParam(':password', $this->password);
-        if($sttm->execute())
-        {
-            $user = $sttm->fetch(PDO::FETCH_ASSOC);
-            if(!empty($user))
-            {
-                extract($user);
-                $_SESSION["id"] = $id;
-                $_SESSION["login"] = $login;
-                $_SESSION["type"] = $type;
-
-                switch ($type){
-                    case "professeur":
-                        $sttm2 = $this->db->prepare("SELECT * FROM professeur WHERE id_user = :id");
-                        $sttm2->bindParam(':id', $id);
-                        if($sttm2->execute()):
-                            $professeur = $sttm2->fetch(PDO::FETCH_ASSOC);
-                            extract($professeur);
-                            $_SESSION["nom"] = $nom;
-                            $_SESSION["prenom"] = $prenom;
-                            $_SESSION["som"] = $som;
-                        endif;
-                        break;
-
-                    case "etudiant":
-                        $sttm2 = $this->db->prepare("SELECT * FROM etudiant WHERE id_user = :id");
-                        $sttm2->bindParam(':id', $id);
-                        if($sttm2->execute()):
-                            $etudiant = $sttm2->fetch(PDO::FETCH_ASSOC);
-                            extract($etudiant);
-                            $_SESSION["nom"] = $nom;
-                            $_SESSION["prenom"] = $prenom;
-                            $_SESSION["cne"] = $cne;
-                            $_SESSION["id_etudiant"] = $id;
-                        endif;
-                        break;
-
-                }
-
-
-                return true;
-            }else{
-                return false;
-            }
-        }
-
-    }
-
-    public function exists($email){
-        $sttm = $this->db->prepare("SELECT * FROM (
-            SELECT utilisateur.login from utilisateur
-            union all
-            SELECT email FROM professeur
-            union all
-            SELECT email FROM etudiant) utilisateur, professeur, etudiant
-            WHERE login = :login or professeur.email = :email or etudiant.email=:email");
-        $sttm->bindParam(':login', $this->login);
-        $sttm->bindParam(':email', $email);
-        if($sttm->execute())
-        {
-            $user = $sttm->fetch(PDO::FETCH_ASSOC);
-            if(!empty($user))
-            {
-                return true;
-            }else{
-                return false;
-            }
-        }
-}
-
-
     /**
      * @return mixed
      */
@@ -183,21 +106,7 @@ class Utilisateur extends Db
 
 
 
-    public function inscription(){
 
-        $sttm = $this->db->prepare("INSERT INTO utilisateur (login, password, type) VALUE (:login, :password, :type)");
-        $sttm->bindParam(':login', $this->login);
-        $sttm->bindParam(':password', $this->password);
-        $sttm->bindParam(':type', $this->type);
-
-        $sttm->execute();
-
-        $this->id = $this->db->lastInsertId();
-
-
-        return true;
-
-    }
 
 
 }
