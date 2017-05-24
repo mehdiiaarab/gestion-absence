@@ -4,7 +4,7 @@
         <div class="row">
 
             <div class="col-lg-8 col-lg-offset-2">
-                <p class="text-center"><h3><i class="fa fa-user-circle-o"></i> Inscription</h3></p>
+                <h3><i class="fa fa-user-circle-o"></i> Inscription</h3>
                 <form action="signup.php" method="POST" autocomplete="off" >
                     <div class="form-group">
                         <label for="">Type</label>
@@ -53,6 +53,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Student -->
                     <div class="row student">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -67,6 +68,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Professeur -->
                     <div class="form-group professeur">
                         <label for="">SOM</label>
                         <input type="number" min="1111111" max="9999999" " name="som" class="form-control" placeholder="SOM" >

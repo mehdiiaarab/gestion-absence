@@ -9,7 +9,7 @@
 
             <div class="col-lg-8 col-lg-offset-2">
                 <p class="text-center"><h3><i class="fa fa-user-circle-o"></i> Inscription</h3></p>
-                <form action="signup.php" method="POST" autocomplete="off" >
+                <form action="modifier_etudiant.php" method="POST" autocomplete="off" >
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">

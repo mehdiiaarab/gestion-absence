@@ -3,12 +3,11 @@
     require_once "header.php";
     $students = [];
 
-    if(isset($_SESSION["type"]) && $_SESSION["type"] == "professeur" ):
-        $students = listEtudiants();
-    elseif (isset($_SESSION["type"]) && $_SESSION["type"] == "admin" ):
-        $students = toutEtudiants();
-    endif;
+    $students = toutEtudiants();
 
+    echo "<pre>";
+    var_dump($students);
+    die();
 ?>
 <div class="container">
     <div class="col-md-8 col-md-offset-2">
